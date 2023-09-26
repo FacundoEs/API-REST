@@ -1,5 +1,6 @@
 package com.facundo.FN.controllers;
 
+import com.facundo.FN.exceptions.ResourceNotFoundException;
 import com.facundo.FN.models.EquipoModel;
 import com.facundo.FN.services.EquipoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,12 @@ public class EquipoController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarPorId(@PathVariable Integer id) {
+    public ResponseEntity<String> eliminarPorId(@PathVariable Integer id) throws ResourceNotFoundException{
         return ResponseEntity.ok(equipoService.eliminarEquipoPorId(id));
     }
 
     @PatchMapping("/modificar/{id}/{nombreNuevo}")
-    public ResponseEntity<String> modificarPorId(@PathVariable Integer id, @PathVariable String nombreNuevo) {
+    public ResponseEntity<String> modificarPorId(@PathVariable Integer id, @PathVariable String nombreNuevo) throws ResourceNotFoundException {
         return ResponseEntity.ok(equipoService.actualizarEquipo(id,nombreNuevo));
     }
 

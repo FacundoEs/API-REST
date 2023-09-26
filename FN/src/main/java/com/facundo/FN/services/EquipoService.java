@@ -1,4 +1,6 @@
 package com.facundo.FN.services;
+
+import com.facundo.FN.exceptions.ResourceNotFoundException;
 import com.facundo.FN.models.EquipoModel;
 import com.facundo.FN.repository.EquipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class EquipoService {
         return equipoRepository.findAll();
     }
 
-    public String actualizarEquipo(Integer id, String nombreNuevo){
+    public String actualizarEquipo(Integer id, String nombreNuevo) throws ResourceNotFoundException {
 
         Optional<EquipoModel> optionalEquipo = equipoRepository.findById(id);
         String devuelve = "";
@@ -37,12 +39,14 @@ public class EquipoService {
             devuelve = "Modificado el equipo " + equipoModel.getNombre() + " a " + nombreNuevo;
             equipoModel.setNombre(nombreNuevo);
             equipoRepository.save(equipoModel);
+        }else {
+            throw new ResourceNotFoundException("No existe el equipo");
         }
 
         return devuelve;
     }
 
-    public String eliminarEquipoPorId(Integer id) {
+    public String eliminarEquipoPorId(Integer id) throws ResourceNotFoundException{
 
         Optional<EquipoModel> equipo = equipoRepository.findById(id);
 
@@ -52,6 +56,8 @@ public class EquipoService {
             EquipoModel equipoModel = equipo.get();
             devuelve = "Eliminado el equipo: " + equipoModel.getNombre();
             equipoRepository.deleteById(id);
+        }else{
+            throw new ResourceNotFoundException("No existe el equipo.");
         }
 
         return devuelve;
