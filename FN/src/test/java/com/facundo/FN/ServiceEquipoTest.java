@@ -4,10 +4,13 @@ import com.facundo.FN.exceptions.ResourceNotFoundException;
 import com.facundo.FN.models.EquipoModel;
 import com.facundo.FN.repository.EquipoRepository;
 import com.facundo.FN.services.EquipoService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -16,7 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ServiceEquipoTest {
+public class ServiceEquipoTest extends SpringBootServletInitializer {
+
+    private static final Logger LOGGER = LogManager.getLogger(FnApplication.class);
 
     @Autowired
     private EquipoService equipoService;
@@ -28,6 +33,7 @@ public class ServiceEquipoTest {
     public void testCrearEquipo() {
         EquipoModel equipo = new EquipoModel();
         equipoService.crearEquipo(equipo);
+        LOGGER.info("[Equipo creado correctamente]");
     }
 
     @Test
@@ -79,4 +85,5 @@ public class ServiceEquipoTest {
 
         assertFalse(equipoEliminado.isPresent());
     }
+
 }
