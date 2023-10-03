@@ -39,6 +39,7 @@ public class ServiceEquipoTest extends SpringBootServletInitializer {
     @Test
     public void testObtenerTodosEquipos() {
         equipoService.obtenerTodosEquipos();
+        LOGGER.info("[Equipo obtenidos correctamente]");
     }
 
     @Test
