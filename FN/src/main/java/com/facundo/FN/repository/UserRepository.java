@@ -1,9 +1,14 @@
 package com.facundo.FN.repository;
 
-import com.facundo.FN.models.UserModel;
+import com.facundo.FN.models.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface UserRepository extends JpaRepository<UserModel, Integer> {
+import java.util.Optional;
 
-    UserModel findByUsuario(String username);
+@Repository
+@Transactional(readOnly = true)
+public interface UserRepository extends JpaRepository<AppUser, String> {
+    Optional<AppUser> findByEmail(String email);
 }
