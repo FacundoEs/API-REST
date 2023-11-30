@@ -1,7 +1,5 @@
 package top.facundo.API.models;
-
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "inscripciones")
 public class InscripcionModel {
@@ -39,5 +37,8 @@ public class InscripcionModel {
 
     public void setEquipo(EquipoModel equipo) {
         this.equipo = equipo;
+    }
+
+    public InscripcionModel() {
     }
 }

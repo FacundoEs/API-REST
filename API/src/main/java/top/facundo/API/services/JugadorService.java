@@ -7,77 +7,54 @@ import top.facundo.API.models.JugadorModel;
 import top.facundo.API.repository.JugadorRepository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-
 @Service
 public class JugadorService {
 
-    private JugadorRepository jugadorRepository;
+    private final JugadorRepository jugadorRepository;
     @Autowired
     public JugadorService(JugadorRepository jugadorRepository) {
         this.jugadorRepository = jugadorRepository;
     }
 
-    public JugadorModel crearJugador(JugadorModel jugador) throws ResourceNotFoundException {
+    public JugadorModel crearJugador(JugadorModel jugador) {
+        return jugadorRepository.save(jugador);
+    }
 
-        Optional<JugadorModel> optionalJugador = jugadorRepository.findById(jugador.getId());
+    public Optional<JugadorModel> obtenerJugadorPorId(Integer id) throws ResourceNotFoundException{
+        Optional<JugadorModel> jugadorExistente = jugadorRepository.findById(id);
 
-        if (optionalJugador.isPresent()) {
-            throw new ResourceNotFoundException("El jugador ya existe.");
-        } else {
-            return jugadorRepository.save(jugador);
+        if (jugadorExistente.isPresent()) {
+            return jugadorExistente;
+        }else {
+            throw new ResourceNotFoundException("Jugador no encontrado con el ID: " + id);
         }
     }
 
-    public Optional<JugadorModel> obtenerJugadorPorId(Integer id) {
-        return jugadorRepository.findById(id);
-    }
-
-    public List<JugadorModel> obtenerTodosJugadores() {
+    public List<JugadorModel> obtenerTodosLosJugadores() {
         return jugadorRepository.findAll();
     }
 
-    public String actualizarJugador(Integer id, String nombreNuevo, int edadNuevo) throws ResourceNotFoundException {
-        Optional<JugadorModel> optionalJugador = jugadorRepository.findById(id);
-        String devuelve = "";
+    public JugadorModel actualizarJugador(Integer id, JugadorModel jugadorActualizado) throws ResourceNotFoundException {
+        Optional<JugadorModel> jugadorExistente = jugadorRepository.findById(id);
 
-        if (optionalJugador.isPresent()) {
-            JugadorModel jugadorModel = optionalJugador.get();
-
-            if(!Objects.equals(nombreNuevo, jugadorModel.getNombre())){
-                jugadorModel.setNombre(nombreNuevo);
-                devuelve += "Modificado el jugador " + jugadorModel.getNombre() + " a " + nombreNuevo;
-            }
-
-            if(edadNuevo != jugadorModel.getEdad()){
-                jugadorModel.setEdad(edadNuevo);
-                devuelve += "Modificada la edad" + jugadorModel.getEdad() + " a " + edadNuevo;
-            }
-
-            jugadorRepository.save(jugadorModel);
-        }else {
-            throw new ResourceNotFoundException("No existe el jugador");
+        if (jugadorExistente.isPresent()) {
+            JugadorModel jugador = jugadorExistente.get();
+            jugador.setNombre(jugadorActualizado.getNombre());
+            jugador.setEdad(jugadorActualizado.getEdad());
+            return jugadorRepository.save(jugador);
+        } else {
+            throw new ResourceNotFoundException("Jugador no encontrado con el ID: " + id);
         }
 
-        return devuelve;
     }
+    public void eliminarJugadorPorId(Integer id) throws ResourceNotFoundException {
+        Optional<JugadorModel> jugadorExistente = jugadorRepository.findById(id);
 
-    public String eliminarJugador(Integer id) throws ResourceNotFoundException {
-
-        Optional<JugadorModel> jugador = jugadorRepository.findById(id);
-
-        String devuelve = "";
-
-        if (jugador.isPresent()) {
-            JugadorModel equipoModel = jugador.get();
-            devuelve = "Eliminado el jugador: " + equipoModel.getNombre() +  " edad: " + equipoModel.getEdad();
+        if (jugadorExistente.isPresent()) {
             jugadorRepository.deleteById(id);
-        }else{
-            throw new ResourceNotFoundException("No existe el jugador.");
+        } else {
+            throw new ResourceNotFoundException("Jugador no encontrado con el ID: " + id);
         }
-
-        return devuelve;
     }
-
 }

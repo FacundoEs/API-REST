@@ -1,7 +1,5 @@
 package top.facundo.API.models;
-
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "jugadores")
 public class JugadorModel {
@@ -11,6 +9,14 @@ public class JugadorModel {
 
     private String nombre;
     private int edad;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -25,19 +31,6 @@ public class JugadorModel {
     }
 
     public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public JugadorModel(String nombre, int edad) {
-        this.nombre = nombre;
         this.edad = edad;
     }
 

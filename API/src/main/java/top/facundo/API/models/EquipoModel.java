@@ -1,16 +1,23 @@
 package top.facundo.API.models;
-
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "equipos")
 public class EquipoModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
+
+    private String descripcion;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -20,11 +27,14 @@ public class EquipoModel {
         this.nombre = nombre;
     }
 
-    public int getId() {
-        return id;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public EquipoModel() {
     }
 }
