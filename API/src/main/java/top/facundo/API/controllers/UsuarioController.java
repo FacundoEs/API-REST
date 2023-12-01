@@ -63,4 +63,14 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/ingresar")
+    public ResponseEntity<?> loginUsuario(@RequestParam String nombreUsuario, @RequestParam String contrasena) {
+        try {
+            UsuarioModel usuarioAutenticado = usuarioService.ingresarUsuario(nombreUsuario, contrasena);
+            return ResponseEntity.ok(usuarioAutenticado);
+        } catch (ResourceNotFoundException | BadRequestException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

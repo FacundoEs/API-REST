@@ -78,4 +78,19 @@ public class UsuarioService {
             throw new ResourceNotFoundException("Usuario no encontrado con el ID: " + id);
         }
     }
+
+    public UsuarioModel ingresarUsuario(String nombreUsuario, String contrasena) throws ResourceNotFoundException, BadRequestException {
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findByUsername(nombreUsuario);
+
+        if (usuarioOptional.isPresent()) {
+            UsuarioModel usuario = usuarioOptional.get();
+            if (passwordEncoder.matches(contrasena, usuario.getPassword())) {
+                return usuario;
+            } else {
+                throw new BadRequestException("La contraseña proporcionada es incorrecta para el usuario: " + nombreUsuario);
+            }
+        } else {
+            throw new ResourceNotFoundException("Usuario no encontrado con el nombre: " + nombreUsuario);
+        }
+    }
 }
