@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: #F4F4F4;
+    font-family: 'Lato', sans-serif;
+    color: #222;
+}
+#container{
+    width: 80vw;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    border: 1px solid #d0d0d0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin: 20px auto 20px auto;
+    word-break: break-word;
+    padding: 10px;
+}
+hr{
+    margin: 10px 0;
+}
+nav ul{
+    display: flex;
+    list-style: none;
+}
+nav ul li{
+    padding: 1em;
+    background-color: #f7f7f7;
+}
+nav ul li:hover{
+    background-color: #dedede;
+}
+nav ul a{
+    text-decoration: none;
+    color: #222;
+}
+#navselected{
+    background-color: #dedede;
+}
+.separador{
+    border: 1px solid black;
+    margin: 10px 0;
+}
+header h1{
+    text-transform: uppercase;
+}
+#ABMNav ul{
+    display: flex;
+    list-style: none;
+}
+#ABMNav ul li{
+    padding: 1em;
+    background-color: #d9ecd8;
+}
+#ABMNav ul li a{
+    text-decoration: none;
+    color: #222;
+}
+#ABMNav ul li:hover{
+    background-color:#a2d09f;
+}
+a.regresar {
+    color: #333;
+    text-decoration: none;
+    text-decoration: underline;
+}
